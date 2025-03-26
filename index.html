@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>✨ Kitty Chat ✨</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive;
+            background-color: #ffd1dc;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Animated stars in background */
+        .star {
+            position: absolute;
+            font-size: 20px;
+            animation: twinkle 1.5s infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            z-index: 1;
+            border: 3px solid #ff69b4;
+        }
+
+        .cat-image {
+            width: 200px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 3px solid #ff69b4;
+        }
+
+        input, select {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 3px solid #ff69b4;
+            border-radius: 15px;
+            font-size: 16px;
+            width: 80%;
+            text-align: center;
+            background-color: #fff5f8;
+            font-family: 'Comic Sans MS', cursive;
+        }
+        
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            transition: all 0.3s;
+            margin: 5px;
+            font-family: 'Comic Sans MS', cursive;
+        }
+        
+        button:hover {
+            background-color: #ff1493;
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .chat-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff5f8;
+            border-radius: 15px;
+            text-align: left;
+            display: none;
+            border: 2px solid #ff69b4;
+        }
+
+        .chat-message {
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 15px;
+            background-color: #ffe6f2;
+            border: 2px solid #ff69b4;
+            animation: popIn 0.5s;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .title {
+            font-size: 24px;
+            color: #ff1493;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Heart decoration */
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: #ff69b4;
+            opacity: 0.6;
+            animation: float 3s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars will be added here by JavaScript -->
+    <div class="container">
+        <div class="title">✨ Kawaii Kitty Chat ✨</div>
+        <img src="https://media1.tenor.com/m/eOkfvFLT87MAAAAC/prout.gif" alt="Cute Dancing Cat" class="cat-image">
+        
+        <div id="step1">
+            <input type="text" id="nameInput" placeholder="🌟 What's your name? Meow! 🌟">
+            <button onclick="startChat()">✨ Let's Be Friends! ✨</button>
+        </div>
+
+        <div id="chat-box" class="chat-box">
+            <div id="conversation"></div>
+            <div id="mood-section" style="display: none;">
+                <select id="moodSelect">
+                    <option value="">🌈 How was your day? 🌈</option>
+                    <option value="amazing">✨ Amazing! 🌟</option>
+                    <option value="good">🌸 Pretty Good 😊</option>
+                    <option value="okay">🌅 Just Okay 😐</option>
+                    <option value="bad">🌙 Not So Great 😔</option>
+                    <option value="terrible">💫 Terrible 😢</option>
+                </select>
+                <button onclick="respondToMood()">🎀 Tell Kitty! 🎀</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add animated stars to background
+        function addStars() {
+            const starEmojis = ['✨', '⭐', '🌟'];
+            for(let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.textContent = starEmojis[Math.floor(Math.random() * starEmojis.length)];
+                document.body.appendChild(star);
+            }
+        }
+
+        // Add floating hearts
+        function addHearts() {
+            const positions = ['5%', '95%', '10%', '90%'];
+            positions.forEach((pos, index) => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = '💖';
+                heart.style.left = pos;
+                heart.style.top = '50%';
+                heart.style.animationDelay = (index * 0.5) + 's';
+                document.body.appendChild(heart);
+            });
+        }
+
+        // Initialize decorations
+        addStars();
+        addHearts();
+
+        function startChat() {
+            const name = document.getElementById('nameInput').value;
+            if (name.trim() === '') {
+                alert('🌟 Meow! Please tell me your name! 🌟');
+                return;
+            }
+
+            document.getElementById('chat-box').style.display = 'block';
+            const conversation = document.getElementById('conversation');
+            conversation.innerHTML = `
+                <div class="chat-message">🎀 Meow! Nice to meet you, ${name}! I'm Whiskers, your kawaii chat friend! 💖</div>
+                <div class="chat-message">🌟 I'd love to know how you're feeling today! 🌟</div>
+            `;
+            document.getElementById('mood-section').style.display = 'block';
+        }
+
+        function respondToMood() {
+            const mood = document.getElementById('moodSelect').value;
+            if (!mood) {
+                alert('🌟 Please select how your day was! 🌟');
+                return;
+            }
+
+            const responses = {
+                amazing: "✨ Purrfect! Your happiness makes me want to dance! Let's celebrate together! 💖🎉",
+                good: "🌸 That's wonderful! Keep spreading those pawsitive vibes! You're doing great! 🌟",
+                okay: "🌅 Every day is a new adventure! Here's a virtual cuddle to make it better! 🤗💝",
+                bad: "🌙 Aww, remember that you're amazing! Want to dance with me to feel better? 💫💕",
+                terrible: "💫 Even the darkest night has stars! Let's dance together and make it better! 🌟✨"
+            };
+
+            const conversation = document.getElementById('conversation');
+            conversation.innerHTML += `
+                <div class="chat-message">🎀 ${responses[mood]}</div>
+                <div class="chat-message">✨ Remember: You're absolutely meow-velous! Keep being paw-some! 🐾💖</div>
+            `;
+
+            document.getElementById('mood-section').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
