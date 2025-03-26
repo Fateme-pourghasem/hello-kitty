@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>✨ Kitty Chat ✨</title>
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -10,7 +13,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            font-family: 'Comic Sans MS', cursive;
+            font-family: 'Bubblegum Sans', 'Comic Sans MS', cursive;
             background-color: #ffd1dc;
             overflow: hidden;
             position: relative;
@@ -51,7 +54,9 @@
             border: 3px solid #ff69b4;
         }
 
-        input, select {
+        input, select, button {
+            /* Make sure form elements use the same font */
+            font-family: 'Bubblegum Sans', 'Comic Sans MS', cursive;
             padding: 12px;
             margin-bottom: 15px;
             border: 3px solid #ff69b4;
@@ -60,7 +65,6 @@
             width: 80%;
             text-align: center;
             background-color: #fff5f8;
-            font-family: 'Comic Sans MS', cursive;
         }
         
         button {
@@ -73,7 +77,6 @@
             border-radius: 15px;
             transition: all 0.3s;
             margin: 5px;
-            font-family: 'Comic Sans MS', cursive;
         }
         
         button:hover {
